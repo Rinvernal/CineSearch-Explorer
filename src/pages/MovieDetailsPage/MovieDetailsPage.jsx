@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom"
 import { fetchMovieDetails, getImageUrl } from "../../services/api";
 import { useEffect, useState } from "react";
+import s from "./MovieDetailsPage.module.css"
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -16,26 +17,45 @@ const MovieDetailsPage = () => {
 
   if (!details) return <p>Loading...</p>;
   return (
-    <div>
-      <Link to={location.state}>Go back</Link>
-      <h2>{details.title}</h2>
-      <img src={details.poster_path ? getImageUrl(details.poster_path) : ""}
-        alt={details.title} width="200px"/>
-      <p>Status: {details.status}</p>
-      <p>Popularity: {details.popularity}</p>
-      <div>
-        <h2>Additional info:</h2>
-        <nav>
-          <ul>
-            <li><NavLink to="cast" state={location.state}>Cast</NavLink></li>
-            <li><NavLink to="reviews" state={location.state}>Reviews</NavLink></li>
-          </ul>
-        <Outlet/>
-      </nav>
-      </div>
+  <div className={s.container}>
+    <div 
+      className={s.backdrop} 
+      style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${details.backdrop_path})` }}
+    ></div>
+
+    <Link to={location.state?.from ?? '/'} className={s.backBtn}>
+      ← Go back
+    </Link>
+
+    <div className={s.contentWrapper}>
+      <img 
+        src={details.poster_path ? getImageUrl(details.poster_path) : ""} 
+        alt={details.title} 
+        className={s.mainPoster}
+      />
       
+      <div className={s.info}>
+        <h1 className={s.title}>{details.title}</h1>
+        <p className={s.status}>Status: <span>{details.status}</span></p>
+        <p className={s.popularity}>Popularity: {details.popularity.toFixed(0)}</p>
+        
+        <div className={s.overview}>
+          <h3>Overview</h3>
+          <p>{details.overview || "No description available."}</p>
+        </div>
+
+        <nav className={s.detailsNav}>
+          <NavLink to="cast" state={{ from: location.state?.from }} className={({ isActive }) => isActive ? s.active : s.link}>Cast</NavLink>
+          <NavLink to="reviews" state={{ from: location.state?.from }} className={({ isActive }) => isActive ? s.active : s.link}>Reviews</NavLink>
+        </nav>
+      </div>
     </div>
-  )
+
+    <div className={s.subContent}>
+      <Outlet context={{ from: location.state?.from }} />
+    </div>
+  </div>
+);
 }
 
 export default MovieDetailsPage

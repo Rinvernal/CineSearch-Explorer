@@ -1,0 +1,68 @@
+.reviewsContainer {
+  margin-top: 30px;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+.reviewItem {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease;
+}
+
+.reviewItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.authorBadge {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--accent-color);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.authorName {
+  font-size: 16px;
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.authorName span {
+  color: var(--text-white);
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.content {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #d1d1d1;
+  white-space: pre-line;
+  margin: 0;
+}
+
+.contentWrapper {
+  border-left: 3px solid var(--accent-color);
+  padding-left: 20px;
+}

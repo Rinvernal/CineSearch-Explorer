@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchMovieReviews } from "../../services/api";
-
+import s from "./MovieReviews.module.css"
 const MovieReviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([])
-  const location = useLocation()
   useEffect(()=>{
     const getData = async() => {
       const data = await fetchMovieReviews(movieId);
@@ -18,18 +17,24 @@ const MovieReviews = () => {
     return <p>We don`t have any reviews for this movie.</p>
   };
   return (
-    <div>
-      <Link to={location.state}>Go back</Link>
-      <ul>
-        {reviews.map(review => (
-          <li key={review.id}>
-            <p><strong>Author:</strong> {review.author}</p>
-            <p>{review.content}</p>
+    <div className={s.reviewsContainer}>
+      <ul className={s.reviewList}>
+        {reviews.map((review) => (
+          <li key={review.id} className={s.reviewItem}>
+            <div className={s.authorBadge}>
+              <div className={s.avatar}>{review.author[0].toUpperCase()}</div>
+                <p className={s.authorName}>
+                  Review by <span>{review.author}</span>
+                </p>
+              </div>
+              <div className={s.contentWrapper}>
+                <p className={s.content}>{review.content}</p>
+              </div>
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 export default MovieReviews

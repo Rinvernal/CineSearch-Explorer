@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../services/api";
 import MovieList from "../../components/MovieList/MovieList";
+import s from "./MoviesPage.module.css";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
@@ -38,28 +39,32 @@ const MoviesPage = () => {
     setSearchParams({ query: searchQuery });
     resetForm();
   };
-
   return (
-    <div>
+  <div className={s.pageContainer}>
+    <div className={s.searchSection}>
+      <h2 className={s.title}>Explore Movies</h2>
       <Formik initialValues={{ query }} onSubmit={handleSubmit}>
-        <Form>
+        <Form className={s.searchForm}>
           <Field
             name="query"
             autoComplete="off"
             autoFocus
-            placeholder="Search films"
+            placeholder="Search films..."
+            className={s.searchInput}
           />
-          <button type="submit">Search</button>
+          <button type="submit" className={s.searchBtn}>Search</button>
         </Form>
       </Formik>
+    </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className={s.error}>{error}</p>}
 
-      {hasSearched && movies.length > 0 && <MovieList movies={movies} />}
-
-      {hasSearched && movies.length === 0 && !error && (
-        <p>No movies found. Try a different query!</p>
-      )}
+      <div className={s.resultsSection}>
+        {hasSearched && movies.length > 0 && <MovieList movies={movies} />}
+        {hasSearched && movies.length === 0 && !error && (
+          <p className={s.noResults}>No movies found. Try a different query!</p>
+        )}
+      </div>
     </div>
   );
 };

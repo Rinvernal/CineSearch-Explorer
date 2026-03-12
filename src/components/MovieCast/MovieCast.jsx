@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieCast, getImageUrl } from "../../services/api";
+import s from "./MovieCast.module.css"
 
 const MovieCast = () => {
   const { movieId } = useParams();
@@ -14,24 +15,29 @@ const MovieCast = () => {
   },[movieId])
 
   if (actors.length === 0) return <p>No cast information available.</p>;
+
   return (
-    <div>
-      <h2>Cast</h2>
-      <ul>
-        {actors.map(actor => (
-          <li key={actor.id}>
+  <div className={s.castContainer}>
+    <h2 className={s.sectionTitle}>Full Cast</h2>
+    <ul className={s.castList}>
+      {actors.map((actor) => (
+        <li key={actor.id} className={s.castItem}>
+          <div className={s.photoWrapper}>
             <img
-              src={actor.profile_path ? getImageUrl(actor.profile_path) : ""}
+              src={actor.profile_path ? getImageUrl(actor.profile_path) : "https://via.placeholder.com/200x300?text=No+Photo"}
               alt={actor.name}
-              width="100px"
+              className={s.actorPhoto}
             />
-            <p>{actor.name}</p>
-            <p>Character: {actor.character}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+          </div>
+          <div className={s.meta}>
+            <p className={s.name}>{actor.name}</p>
+            <p className={s.character}>{actor.character}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 }
 
 export default MovieCast

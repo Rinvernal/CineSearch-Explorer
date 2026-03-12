@@ -1,0 +1,25 @@
+.mainTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: var(--text-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  padding: 50px 50px 20px 50px; 
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.mainTitle::before {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 35px;
+  background-color: var(--accent-color);
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(210, 255, 0, 0.4);
+}
